@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "quickbooks": {
+      "command": "node",
+      "args": ["/path/to/quickbooks-online-mcp-server/dist/index.js"],
+      "env": {
+        "QUICKBOOKS_DISABLE_WRITE": "true",
+        "QUICKBOOKS_DISABLE_UPDATE": "true",
+        "QUICKBOOKS_DISABLE_DELETE": "true"
+      }
+    }
+  }
+}

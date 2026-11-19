@@ -1,3 +1,35 @@
+> ## About this fork
+>
+> This is a fork of [Intuit's official QuickBooks Online MCP server](https://github.com/intuit/quickbooks-online-mcp-server). The server code is Intuit's and its contributors'. I did not write it.
+>
+> **What I use it for:** letting Claude (via Claude Code) answer questions about QuickBooks Online data (P&L, balance sheet, aged receivables, customer and vendor balances) **without the ability to change anything**.
+>
+> **How it is configured read-only:** the server registers every tool through `src/helpers/register-tool.ts`, which skips any tool whose name starts with `create`, `update`, or `delete` when the matching flag is set. I checked that every tool in `src/tools/` follows that naming, so with all three flags on, only `get`, `read`, and `search` tools are exposed.
+>
+> ```json
+> {
+>   "mcpServers": {
+>     "quickbooks": {
+>       "command": "node",
+>       "args": ["/path/to/quickbooks-online-mcp-server/dist/index.js"],
+>       "env": {
+>         "QUICKBOOKS_DISABLE_WRITE": "true",
+>         "QUICKBOOKS_DISABLE_UPDATE": "true",
+>         "QUICKBOOKS_DISABLE_DELETE": "true"
+>       }
+>     }
+>   }
+> }
+> ```
+>
+> OAuth credentials go in `.env` as described in the upstream instructions below; never commit them. Use a sandbox company to test first.
+>
+> Why read-only: an AI connected to a general ledger should be able to read the books long before anyone lets it write to them. The reasoning is in my [AI Governance Framework](https://github.com/Moezusb/ai-governance-framework/blob/main/docs/04-agents-and-tool-permissions.md).
+>
+> Everything below this note is the upstream README.
+
+---
+
 # QuickBooks Online MCP Server
 
 <div align="center">
